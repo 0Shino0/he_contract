@@ -32,8 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		httpSecurity.authorizeRequests()
 			//授予对所有静态资产和登录页面的公共访问权限。
+            // 以及放行注册接口
 			.antMatchers(adminContextPath + "/assets/**").permitAll()
 			.antMatchers(adminContextPath + "/login").permitAll()
+            .antMatchers(adminContextPath + "/register").permitAll()
 			//必须对每个其他请求进行身份验证
 			.anyRequest().authenticated().and()
 			//配置登录和注销

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HeUserInfoMapper">
+
+    <resultMap type="com.ruoyi.system.domain.HeUserInfo" id="HeUserInfoResult">
+        <result property="id" column="id"/>
+        <result property="realName" column="real_name"/>
+        <result property="belong" column="belong"/>
+        <result property="idCard" column="id_card"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="getUserInfoById" resultType="com.ruoyi.system.domain.HeUserInfo">
+        select su.phonenumber as phone,hui.* from he_user_info hui join sys_user su on hui.belong = su.user_id where hui.belong = #{id}
+    </select>
+
+</mapper>

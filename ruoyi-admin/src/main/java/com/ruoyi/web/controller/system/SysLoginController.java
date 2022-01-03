@@ -49,7 +49,7 @@ public class SysLoginController
 		Map<String,Object> ajax = new HashMap<>();
         // 生成令牌
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getUuid());
+                loginBody.getUuid(),loginBody.getIsWxLogin());
         ajax.put(Constants.TOKEN, token);
         return AjaxResult.success(ajax);
     }

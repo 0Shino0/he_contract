@@ -359,3 +359,19 @@ spring:
             tablePrefix: QRTZ_
             # sqlserver 启用
             # selectWithLockSQL: SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?
+--- # Fabric 超级账本gateway连接配置项
+fabric:
+  # 网络配置文件路径
+  networkConfigPath: mychannel_connection_for_javasdk.yaml
+  # 用户证书路径
+  certificatePath: crypto-config/peerOrganizations/bc1.henriport.com/users/Admin@bc1.henriport.com/msp/signcerts/Admin@bc1.henriport.com-cert.pem
+  # 用户私钥路径
+  privateKeyPath: crypto-config/peerOrganizations/bc1.henriport.com/users/Admin@bc1.henriport.com/msp/keystore/priv_sk
+  # 链码名字
+  contractName: contract
+  # 通道名字
+  channelName: mychannel
+  # mspId
+  mspId: bc1-henriport-com
+  # 用户
+  user: admin

@@ -2,7 +2,9 @@ package com.ruoyi.web.controller.system;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.IdcardUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
@@ -10,13 +12,19 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.service.TokenService;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.regex.IdCardUtils;
+import com.ruoyi.common.utils.regex.PhoneUtils;
+import com.ruoyi.system.domain.HeUserInfo;
 import com.ruoyi.system.domain.vo.SysUserExportVo;
 import com.ruoyi.system.domain.vo.SysUserImportVo;
+import com.ruoyi.system.service.IHeUserInfoService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
@@ -26,11 +34,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +56,12 @@ public class SysUserController extends BaseController
 
     @Autowired
     private ISysPostService postService;
+
+    @Autowired
+    private IHeUserInfoService userInfoService;
+
+    @Autowired
+    private TokenService tokenService;
 
     /**
      * 获取用户列表
@@ -235,5 +247,22 @@ public class SysUserController extends BaseController
     {
         userService.insertUserAuth(userId, roleIds);
         return success();
+    }
+
+    /**
+     * 查询用户对应的详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('system:user:query')")
+    @GetMapping("/userInfo")
+    public AjaxResult getUserInfoById(HttpServletRequest request)
+    {
+        LoginUser loginUser = tokenService.getLoginUser(request);
+        HeUserInfo userInfo = userInfoService.getUserInfoById(loginUser.getUserId());
+        // 数据脱敏处理
+        // phone 为137****2592
+        userInfo.setPhone(PhoneUtils.blurPhone(userInfo.getPhone()));
+        // idCard为 4310**********3411
+        userInfo.setIdCard(IdCardUtils.blurIdCard(userInfo.getIdCard()));
+        return AjaxResult.success(userInfo);
     }
 }

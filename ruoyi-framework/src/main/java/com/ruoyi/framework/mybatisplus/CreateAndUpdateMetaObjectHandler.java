@@ -29,6 +29,15 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
 			if (metaObject.hasGetter("createBy")) {
 				this.setFieldValByName("createBy", getLoginUsername(), metaObject);
 			}
+			if (metaObject.hasGetter("isDelete")) {
+				this.setFieldValByName("isDelete", 0, metaObject);
+			}
+			if (metaObject.hasGetter("isLink")) {
+				this.setFieldValByName("isLink", 0, metaObject);
+			}
+			if (metaObject.hasGetter("state")) {
+				this.setFieldValByName("state", "1", metaObject);
+			}
 		} catch (Exception e) {
 			throw new ServiceException("自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
 		}

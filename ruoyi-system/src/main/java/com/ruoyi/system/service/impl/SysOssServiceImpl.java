@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.core.mybatisplus.core.ServicePlusImpl;
 import com.ruoyi.common.core.page.PagePlus;
@@ -11,6 +12,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.oss.entity.UploadResult;
 import com.ruoyi.oss.factory.OssFactory;
 import com.ruoyi.oss.service.ICloudStorageStrategy;
+import com.ruoyi.system.domain.HeSeal;
 import com.ruoyi.system.domain.SysOss;
 import com.ruoyi.system.domain.bo.SysOssBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
@@ -74,7 +76,25 @@ public class SysOssServiceImpl extends ServicePlusImpl<SysOssMapper, SysOss, Sys
 		return oss;
 	}
 
-	@Override
+    /**
+     * 根据data,url修改现存OSS文件
+     * @param data
+     * @param url
+     * @return
+     */
+    @Override
+    public Boolean updateFile(byte[] data, String url) {
+        ICloudStorageStrategy storage = OssFactory.instance();
+        UploadResult upload = null;
+        // TODO 适配，先写死删除前缀
+        url = url.replace("https://he-contract.oss-cn-guangzhou.aliyuncs.com/","");
+        // TODO 适配，先写死contentType为pdf
+        upload = storage.upload(data, url, "application/pdf");
+        System.out.println(upload.toString());
+        return upload!=null?true:false;
+    }
+
+    @Override
 	public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
 		if (isValid) {
 			// 做一些业务上的校验,判断是否需要校验
@@ -86,5 +106,22 @@ public class SysOssServiceImpl extends ServicePlusImpl<SysOssMapper, SysOss, Sys
 		}
 		return removeByIds(ids);
 	}
+
+    /**
+     * 根据urls删除oss文件
+     * @param urls
+     * @return
+     */
+    @Override
+    public Boolean deleteWithValidByUrls(Collection<String> urls) {
+        for (String url : urls) {
+            ICloudStorageStrategy storage = OssFactory.instance();
+			storage.delete(url);
+        }
+        QueryWrapper<SysOss> sysOssQueryWrapper = new QueryWrapper<>();
+        sysOssQueryWrapper.in("url",urls);
+        return remove(sysOssQueryWrapper);
+    }
+
 
 }

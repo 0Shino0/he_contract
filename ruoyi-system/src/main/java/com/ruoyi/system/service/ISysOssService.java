@@ -20,5 +20,10 @@ public interface ISysOssService extends IServicePlus<SysOss, SysOssVo> {
 
 	SysOss upload(MultipartFile file);
 
+	Boolean updateFile(byte[] data,String url);
+
 	Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+	Boolean deleteWithValidByUrls(Collection<String> urls);
+
 }

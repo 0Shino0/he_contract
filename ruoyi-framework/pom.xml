@@ -19,15 +19,15 @@
 
         <!-- BEGIN 如果想使用 Tomcat 注释掉以下代码 -->
         <!-- SpringBoot Web容器 -->
-         <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-             <exclusions>
-                 <exclusion>
-                     <artifactId>spring-boot-starter-tomcat</artifactId>
-                     <groupId>org.springframework.boot</groupId>
-                 </exclusion>
-             </exclusions>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- web 容器使用 undertow 性能更强 -->
         <dependency>
@@ -37,10 +37,10 @@
         <!-- END -->
 
         <!-- BEGIN 如果想使用 Tomcat 解除以下代码注释 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
         <!-- END -->
 
         <!-- SpringBoot 拦截器 -->

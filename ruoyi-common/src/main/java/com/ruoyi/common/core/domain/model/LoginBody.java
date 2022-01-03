@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户登录对象
- * 
+ *
  * @author ruoyi
  */
 
@@ -33,5 +33,10 @@ public class LoginBody
      * 唯一标识
      */
     private String uuid = "";
+
+    /**
+     * 是否是微信登录
+     */
+    private Boolean isWxLogin;
 
 }

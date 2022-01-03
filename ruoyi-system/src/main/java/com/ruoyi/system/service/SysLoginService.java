@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * 登录校验方法
@@ -54,11 +55,13 @@ public class SysLoginService {
      * @param uuid     唯一标识
      * @return 结果
      */
-    public String login(String username, String password, String code, String uuid) {
+    public String login(String username, String password, String code, String uuid,Boolean isWxLogin) {
         HttpServletRequest request = ServletUtils.getRequest();
         boolean captchaOnOff = configService.selectCaptchaOnOff();
+        // 空值判断，为空则返回false
+        isWxLogin = Optional.ofNullable(isWxLogin).orElse(false);
         // 验证码开关
-        if (captchaOnOff) {
+        if (captchaOnOff&&!isWxLogin) {
             validateCaptcha(username, code, uuid, request);
         }
         // 用户验证
