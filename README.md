@@ -34,7 +34,7 @@ RuoYi-Vue-Plus 是基于 RuoYi-Vue 针对 `分布式集群` 场景升级(不兼�
 | 国际化 | SpringMessage | [SpringMVC文档](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc) | Spring标准国际化方案 |
 
 ## 本系统演示视频
-> BV1s44y1E7sm
+> https://www.bilibili.com/video/BV1s44y1E7sm
 
 ## **基于区块链技术的电子合同管理系统**
 
