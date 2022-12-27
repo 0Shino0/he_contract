@@ -737,8 +737,3 @@ http://cw.hubwiz.com/card/c/ipfs/1/1/1/
 
 docker部署IPFS私有链
 https://blog.csdn.net/cljdsc/article/details/110849702
-
-## 赞赏一下
-
-![](1652104018332.jpg)
-![](mm_facetoface_collect_qrcode_1652103136418.png)

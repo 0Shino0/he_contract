@@ -241,7 +241,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="归属于" prop="belong">
-          <el-input v-model="form.belong" placeholder="请输入归属于"/>
+          <el-input v-model.number="form.belong" placeholder="请输入归属于"/>
         </el-form-item>
         <el-form-item label="oss存储" prop="ossUrl">
           <!--          <image-upload v-model="form.ossUrl" :limit="1"/>-->
@@ -407,7 +407,8 @@ export default {
           {required: true, message: "合同类别不能为空", trigger: "change"}
         ],
         belong: [
-          {required: true, message: "归属于不能为空", trigger: "blur"}
+          {required: true, message: "归属于不能为空", trigger: "blur"},
+          {type: "number", message: "归属于必须为数字", trigger: "blur"},
         ],
         ossUrl: [
           {required: true, message: "oss存储不能为空", trigger: "blur"}

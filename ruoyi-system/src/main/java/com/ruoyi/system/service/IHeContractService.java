@@ -1,13 +1,12 @@
 package com.ruoyi.system.service;
 
-import com.itextpdf.text.DocumentException;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.system.domain.HeContract;
 import com.ruoyi.system.domain.vo.HeContractVo;
 import com.ruoyi.system.domain.bo.HeContractBo;
 import com.ruoyi.common.core.mybatisplus.core.IServicePlus;
 import com.ruoyi.common.core.page.TableDataInfo;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +37,7 @@ public interface IHeContractService extends IServicePlus<HeContract, HeContractV
 
     /**
      * 根据用户id获取对应的列表
+     *
      * @param userId
      * @return
      */
@@ -80,5 +80,4 @@ public interface IHeContractService extends IServicePlus<HeContract, HeContractV
      * @return
      */
     Boolean setStateById(Long id, Boolean type, String pdfUrl, String sealUrl);
-
 }

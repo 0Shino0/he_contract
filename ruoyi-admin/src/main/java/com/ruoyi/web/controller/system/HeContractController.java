@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import com.itextpdf.text.DocumentException;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.service.TokenService;
 import com.ruoyi.system.domain.HeContract;
+import com.ruoyi.system.service.ISysUserService;
 import lombok.RequiredArgsConstructor;
 
 import javax.annotation.Resource;
@@ -50,6 +52,8 @@ import io.swagger.annotations.ApiOperation;
 public class HeContractController extends BaseController {
 
     private final IHeContractService iHeContractService;
+
+    private final ISysUserService iSysUserService;
 
     @Autowired
     private TokenService tokenService;
@@ -110,7 +114,12 @@ public class HeContractController extends BaseController {
             bo.setBelong(loginUser.getUserId());
             System.out.println(bo);
         }
-        return toAjax(iHeContractService.insertByBo(bo) ? 1 : 0);
+        SysUser checkUser = iSysUserService.selectUserById(bo.getBelong());
+        if (checkUser != null) {
+            return toAjax(iHeContractService.insertByBo(bo) ? 1 : 0);
+        } else {
+            return toAjax("归属于对象不存在");
+        }
     }
 
     /**
@@ -122,7 +131,12 @@ public class HeContractController extends BaseController {
     @RepeatSubmit()
     @PutMapping()
     public AjaxResult<Void> edit(@Validated(EditGroup.class) @RequestBody HeContractBo bo) {
-        return toAjax(iHeContractService.updateByBo(bo) ? 1 : 0);
+        SysUser checkUser = iSysUserService.selectUserById(bo.getBelong());
+        if (checkUser != null) {
+            return toAjax(iHeContractService.updateByBo(bo) ? 1 : 0);
+        } else {
+            return toAjax("归属于对象不存在");
+        }
     }
 
     /**
@@ -155,6 +169,4 @@ public class HeContractController extends BaseController {
                                         String pdfUrl, String sealUrl) {
         return toAjax(iHeContractService.setStateById(id, type, pdfUrl, sealUrl) ? 1 : 0);
     }
-
-
 }

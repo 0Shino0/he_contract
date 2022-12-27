@@ -14,7 +14,7 @@ spring:
           driverClassName: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://localhost:3306/he_contract?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
           username: root
-          password: root
+          password: cry020114
         # 从库数据源
         slave:
           lazy: true
@@ -74,13 +74,13 @@ spring:
 spring:
   redis:
     # 地址
-    host: localhost
+    host: 192.168.112.132
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
     # 密码
-    password:
+    password: cry020114
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl
@@ -191,5 +191,5 @@ spring:
         url: http://localhost:9090/admin
         instance:
           prefer-ip: true # 注册实例时，优先使用 IP
-        username: ruoyi
-        password: 123456
+        username: AntonyCheng
+        password: cry020114

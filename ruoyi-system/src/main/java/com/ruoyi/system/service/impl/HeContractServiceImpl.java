@@ -1,10 +1,10 @@
 package com.ruoyi.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.aliyun.oss.OSS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.itextpdf.text.DocumentException;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.common.core.page.PagePlus;
@@ -13,6 +13,7 @@ import com.ruoyi.common.utils.fabric.FabricUtils;
 import com.ruoyi.common.utils.ipfs.IPFSUtils;
 import com.ruoyi.common.utils.pdf.PDFUtils;
 import com.ruoyi.system.service.ISysOssService;
+import com.ruoyi.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.fabric.gateway.Contract;
 import org.hyperledger.fabric.gateway.ContractException;
@@ -168,7 +169,7 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
                         ipfsHash,
                         heContractVo.getBelong().toString(),
                         heContractVo.getBelong().toString());
-                log.info("addContract："+new String(addContractResult, StandardCharsets.UTF_8));
+                log.info("addContract：" + new String(addContractResult, StandardCharsets.UTF_8));
             }
         } catch (DocumentException documentException) {
             documentException.printStackTrace();

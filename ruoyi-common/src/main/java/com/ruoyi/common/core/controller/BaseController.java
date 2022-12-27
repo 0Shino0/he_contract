@@ -12,50 +12,44 @@ import org.slf4j.LoggerFactory;
  *
  * @author ruoyi
  */
-public class BaseController
-{
+public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 返回成功
      */
-    public AjaxResult<Void> success()
-    {
+    public AjaxResult<Void> success() {
         return AjaxResult.success();
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult<Void> error()
-    {
+    public AjaxResult<Void> error() {
         return AjaxResult.error();
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult<Void> success(String message)
-    {
+    public AjaxResult<Void> success(String message) {
         return AjaxResult.success(message);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult<Void> error(String message)
-    {
+    public AjaxResult<Void> error(String message) {
         return AjaxResult.error(message);
     }
 
     /**
      * 响应返回结果
-     * 
+     *
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult<Void> toAjax(int rows)
-    {
+    protected AjaxResult<Void> toAjax(int rows) {
         return rows > 0 ? AjaxResult.success() : AjaxResult.error();
     }
 
@@ -65,48 +59,53 @@ public class BaseController
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult<Void> toAjax(boolean result)
-    {
+    protected AjaxResult<Void> toAjax(boolean result) {
         return result ? success() : error();
     }
 
     /**
+     * 返回修改电子合同管理添加或者修改时归属于对象不存在错误
+     *
+     * @param error 返回的错误信息
+     * @return
+     */
+    protected AjaxResult<Void> toAjax(String error) {
+        return AjaxResult.error(error);
+    }
+
+
+    /**
      * 页面跳转
      */
-    public String redirect(String url)
-    {
+    public String redirect(String url) {
         return StringUtils.format("redirect:{}", url);
     }
 
     /**
      * 获取用户缓存信息
      */
-    public LoginUser getLoginUser()
-    {
+    public LoginUser getLoginUser() {
         return SecurityUtils.getLoginUser();
     }
 
     /**
      * 获取登录用户id
      */
-    public Long getUserId()
-    {
+    public Long getUserId() {
         return getLoginUser().getUserId();
     }
 
     /**
      * 获取登录部门id
      */
-    public Long getDeptId()
-    {
+    public Long getDeptId() {
         return getLoginUser().getDeptId();
     }
 
     /**
      * 获取登录用户名
      */
-    public String getUsername()
-    {
+    public String getUsername() {
         return getLoginUser().getUsername();
     }
 }
