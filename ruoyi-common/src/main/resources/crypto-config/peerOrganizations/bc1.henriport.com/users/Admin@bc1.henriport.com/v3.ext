@@ -1,0 +1,4 @@
+keyUsage = critical,digitalSignature
+basicConstraints = critical,CA:FALSE
+subjectAltName=IP: 192.168.112.132,DNS:Admin@bc1.henriport.com,DNS:Admin@bc1-henriport-com,DNS:localhost,IP:127.0.0.1
+authorityKeyIdentifier = keyid,issuer

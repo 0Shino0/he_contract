@@ -1,0 +1,74 @@
+---
+"name": "mysite"
+"x-type": "hlfv1"
+"version": "1.0.0"
+"client":
+  "organization": bc1.henriport.com
+  "connection":
+    "timeout":
+      "peer":
+        "endorser": "300"
+"organizations":
+  "bc1.henriport.com":
+    "mspid": "bc1-henriport-com"
+    "peers":
+    - "p1.bc1.henriport.com"
+    "orderers": []
+    "certificateAuthorities":
+    - "ca.bc1.henriport.com"
+  "bc2.henriport.com":
+    "mspid": "bc2-henriport-com"
+    "peers":
+    - "p1.bc2.henriport.com"
+    "orderers": []
+    "certificateAuthorities":
+    - "ca.bc2.henriport.com"
+  "henriport.com":
+    "mspid": "henriport-com"
+    "peers": []
+    "orderers":
+    - "orderer1.henriport.com"
+
+"orderers":
+  "orderer1.henriport.com":
+    "url": "grpcs://192.168.112.132:7004"
+    "grpcOptions":
+      "ssl-target-name-override": "orderer1.henriport.com"
+    "tlsCACerts":
+      "pem": "-----BEGIN CERTIFICATE-----\nMIICrzCCAlSgAwIBAgIUF5IqnNUOaudNYw99UXRWLITCZNUwCgYIKoZIzj0EAwIw\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRYwFAYDVQQKDA1oZW5yaXBvcnQuY29tMRwwGgYDVQQDDBN0bHNj\nYS5oZW5yaXBvcnQuY29tMB4XDTIyMTIyOTE0MDgzNloXDTMyMTIyNjE0MDgzNlow\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRYwFAYDVQQKDA1oZW5yaXBvcnQuY29tMRwwGgYDVQQDDBN0bHNj\nYS5oZW5yaXBvcnQuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErJmFnSPP\nxVHwV79EYj5Rp6tLUwvg8/QjLdPCuX3aQckybgYLDkyuHo6e3Y9/tnwKYXF9VO1m\nY2J3xTGcZFSORKOBzzCBzDAdBgNVHQ4EFgQUyL2sVz7GPUJaFVpv0Ha883ez8MIw\nHwYDVR0jBBgwFoAUyL2sVz7GPUJaFVpv0Ha883ez8MIwDwYDVR0TAQH/BAUwAwEB\n/zAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMC\nMEoGA1UdEQRDMEGHBMCocISCE3Rsc2NhLmhlbnJpcG9ydC5jb22CE3Rsc2NhLWhl\nbnJpcG9ydC1jb22CCWxvY2FsaG9zdIcEfwAAATAKBggqhkjOPQQDAgNJADBGAiEA\n7cikEpZ04IwM1bJElH7uvTwk4+JnMJAZwz43bbsvMwwCIQDWfIcniFJaqLU5p2KL\nnGq7w985R5oSbup2q/m0TTp8uQ==\n-----END CERTIFICATE-----"
+
+"peers":
+  "p1.bc1.henriport.com":
+    "url": "grpcs://192.168.112.132:7002"
+    "grpcOptions":
+      "ssl-target-name-override": "p1.bc1.henriport.com"
+    "tlsCACerts":
+      "pem": "-----BEGIN CERTIFICATE-----\nMIICxjCCAmygAwIBAgIUN8Cr0erGJVZHzsZgz6jUrCGVbhwwCgYIKoZIzj0EAwIw\ndjELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRowGAYDVQQKDBFiYzEuaGVucmlwb3J0LmNvbTEgMB4GA1UEAwwX\ndGxzY2EuYmMxLmhlbnJpcG9ydC5jb20wHhcNMjIxMjI5MTQwODA2WhcNMzIxMjI2\nMTQwODA2WjB2MQswCQYDVQQGEwJVUzEXMBUGA1UECAwOTm9ydGggQ2Fyb2xpbmEx\nEDAOBgNVBAcMB1JhbGVpZ2gxGjAYBgNVBAoMEWJjMS5oZW5yaXBvcnQuY29tMSAw\nHgYDVQQDDBd0bHNjYS5iYzEuaGVucmlwb3J0LmNvbTBZMBMGByqGSM49AgEGCCqG\nSM49AwEHA0IABIyR1ukChZFe0KhmKLwLimKdfy9NUDSWYDdI43VNFFXuH1BEFwIB\nJuqm9wxLkjg0npYkYTqtpXu7yZPL3Qs0pkmjgdcwgdQwHQYDVR0OBBYEFILqhmNe\n1BPFaAiuRED8xuSUtW0WMB8GA1UdIwQYMBaAFILqhmNe1BPFaAiuRED8xuSUtW0W\nMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsG\nAQUFBwMBBggrBgEFBQcDAjBSBgNVHREESzBJhwTAqHCEghd0bHNjYS5iYzEuaGVu\ncmlwb3J0LmNvbYIXdGxzY2EtYmMxLWhlbnJpcG9ydC1jb22CCWxvY2FsaG9zdIcE\nfwAAATAKBggqhkjOPQQDAgNIADBFAiEAlw9aVz7nMWtbyIOs+cJ6USj9BOJsdAuU\neaf3mrdF6CcCIG5/pbaRTh+MDVAzsWFwm+ctNlhqDfBm9H9uGWwd30eA\n-----END CERTIFICATE-----"
+  "p1.bc2.henriport.com":
+    "url": "grpcs://192.168.112.132:7003"
+    "grpcOptions":
+      "ssl-target-name-override": "p1.bc2.henriport.com"
+    "tlsCACerts":
+      "pem": "-----BEGIN CERTIFICATE-----\nMIICxTCCAmygAwIBAgIUFTxefrQa2cFG1HTeAAloXgnr6fwwCgYIKoZIzj0EAwIw\ndjELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRowGAYDVQQKDBFiYzIuaGVucmlwb3J0LmNvbTEgMB4GA1UEAwwX\ndGxzY2EuYmMyLmhlbnJpcG9ydC5jb20wHhcNMjIxMjI5MTQwODIwWhcNMzIxMjI2\nMTQwODIwWjB2MQswCQYDVQQGEwJVUzEXMBUGA1UECAwOTm9ydGggQ2Fyb2xpbmEx\nEDAOBgNVBAcMB1JhbGVpZ2gxGjAYBgNVBAoMEWJjMi5oZW5yaXBvcnQuY29tMSAw\nHgYDVQQDDBd0bHNjYS5iYzIuaGVucmlwb3J0LmNvbTBZMBMGByqGSM49AgEGCCqG\nSM49AwEHA0IABFlInRuLPAcYJqo7PMn0kCArZi6pOutVvrlFNRUxFnhNpmnULzOd\nfJwwOLHIPe09Opx33uYIRnZD4J/PZXRzdz6jgdcwgdQwHQYDVR0OBBYEFE6Th8+r\nyhAHoWPGvmlrOH2HB/PVMB8GA1UdIwQYMBaAFE6Th8+ryhAHoWPGvmlrOH2HB/PV\nMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsG\nAQUFBwMBBggrBgEFBQcDAjBSBgNVHREESzBJhwTAqHCEghd0bHNjYS5iYzIuaGVu\ncmlwb3J0LmNvbYIXdGxzY2EtYmMyLWhlbnJpcG9ydC1jb22CCWxvY2FsaG9zdIcE\nfwAAATAKBggqhkjOPQQDAgNHADBEAiBVHxjQ0LjLrgF+HgZW+maDwM93NU9NKulM\noZV20kaDlAIgDn1eAABEJHihgp1xpNQZbb2RUiTTdv8Nem/Ub2b8vxM=\n-----END CERTIFICATE-----"
+
+"certificateAuthorities":
+  "ca.bc1.henriport.com":
+    "url": "https://192.168.112.132:7000"
+    "tlsCACerts":
+      "pem": "-----BEGIN CERTIFICATE-----\nMIICujCCAmCgAwIBAgIUIvB/jS3us2gDVUW7eARCqUW6l7kwCgYIKoZIzj0EAwIw\nczELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRowGAYDVQQKDBFiYzEuaGVucmlwb3J0LmNvbTEdMBsGA1UEAwwU\nY2EuYmMxLmhlbnJpcG9ydC5jb20wHhcNMjIxMjI5MTQwODA1WhcNMzIxMjI2MTQw\nODA1WjBzMQswCQYDVQQGEwJVUzEXMBUGA1UECAwOTm9ydGggQ2Fyb2xpbmExEDAO\nBgNVBAcMB1JhbGVpZ2gxGjAYBgNVBAoMEWJjMS5oZW5yaXBvcnQuY29tMR0wGwYD\nVQQDDBRjYS5iYzEuaGVucmlwb3J0LmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABHOPn2MC8J6+AWwnbJcULIdc7T+21pmOLOjg3sCvjOqdvLEiekpivD597OFw\nQXn3voFrns23ZrmyUshvTAzvdDKjgdEwgc4wHQYDVR0OBBYEFIEi+NkHl6n2vZlr\n2AO9EHmn/+kZMB8GA1UdIwQYMBaAFIEi+NkHl6n2vZlr2AO9EHmn/+kZMA8GA1Ud\nEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMB\nBggrBgEFBQcDAjBMBgNVHREERTBDhwTAqHCEghRjYS5iYzEuaGVucmlwb3J0LmNv\nbYIUY2EtYmMxLWhlbnJpcG9ydC1jb22CCWxvY2FsaG9zdIcEfwAAATAKBggqhkjO\nPQQDAgNIADBFAiEA/C9Nw1U69Z1eb/V0XzhnXyELz6NuzzwSZnFXEyyY3EkCIBo/\ncBZPjxndqcn6iuByOJQssGz46tbvrUK1QZKu2o36\n-----END CERTIFICATE-----"
+    "httpOptions":
+      "verify": "false"
+    "caName": "ca"
+    "registrar":
+      "enrollId": "admin"
+      "enrollSecret": "adminpw"
+  "ca.bc2.henriport.com":
+    "url": "https://192.168.112.132:7001"
+    "tlsCACerts":
+      "pem": "-----BEGIN CERTIFICATE-----\nMIICuTCCAmCgAwIBAgIUGr8ZEJVSXrFy+4iYu55kSm6/EE4wCgYIKoZIzj0EAwIw\nczELMAkGA1UEBhMCVVMxFzAVBgNVBAgMDk5vcnRoIENhcm9saW5hMRAwDgYDVQQH\nDAdSYWxlaWdoMRowGAYDVQQKDBFiYzIuaGVucmlwb3J0LmNvbTEdMBsGA1UEAwwU\nY2EuYmMyLmhlbnJpcG9ydC5jb20wHhcNMjIxMjI5MTQwODIwWhcNMzIxMjI2MTQw\nODIwWjBzMQswCQYDVQQGEwJVUzEXMBUGA1UECAwOTm9ydGggQ2Fyb2xpbmExEDAO\nBgNVBAcMB1JhbGVpZ2gxGjAYBgNVBAoMEWJjMi5oZW5yaXBvcnQuY29tMR0wGwYD\nVQQDDBRjYS5iYzIuaGVucmlwb3J0LmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABLf/tEZG5KDKZy1tzXIGW1F4CfAIjiflziF2qsSf7tJJN/VpKJziWkyXQcYq\nkJ0nbe+w/o4rCdwRjylBrvqE6bGjgdEwgc4wHQYDVR0OBBYEFLTx7uKiKsHoQFXX\n6puCy12F5agaMB8GA1UdIwQYMBaAFLTx7uKiKsHoQFXX6puCy12F5agaMA8GA1Ud\nEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMB\nBggrBgEFBQcDAjBMBgNVHREERTBDhwTAqHCEghRjYS5iYzIuaGVucmlwb3J0LmNv\nbYIUY2EtYmMyLWhlbnJpcG9ydC1jb22CCWxvY2FsaG9zdIcEfwAAATAKBggqhkjO\nPQQDAgNHADBEAiBdm7L/EpM8uR9Arft20A8YA8s7WGYBC7dpVkXklL7mhQIgT3tN\n8X4hZzO+bbsg7ALuByabJyipV8DtsoZOoNhUZjY=\n-----END CERTIFICATE-----"
+    "httpOptions":
+      "verify": "false"
+    "caName": "ca"
+    "registrar":
+      "enrollId": "admin"
+      "enrollSecret": "adminpw"
