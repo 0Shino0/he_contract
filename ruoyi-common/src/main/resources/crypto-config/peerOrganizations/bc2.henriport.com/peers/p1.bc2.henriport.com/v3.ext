@@ -1,4 +1,0 @@
-keyUsage = critical,digitalSignature
-basicConstraints = critical,CA:FALSE
-subjectAltName=IP: 1.15.135.97,DNS:p1.bc2.henriport.com,DNS:p1-bc2-henriport-com,DNS:localhost,IP:127.0.0.1
-authorityKeyIdentifier = keyid,issuer

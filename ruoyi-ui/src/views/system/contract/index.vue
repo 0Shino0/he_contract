@@ -315,7 +315,7 @@
             :value="seal.ossUrl"
           />
         </el-select>
-        <el-button @click="handleCheck(pdf.id,true)" :disabled="pdf.state==2||pdf.state==0"
+        <el-button @click="handleCheck(pdf.id,true)" :disabled="isCheck"
                    type="primary">审核通过</el-button>
         <el-button @click="handleCheck(pdf.id,false)" :disabled="pdf.state==3||pdf.state==0"
                    type="danger">审核不通过</el-button>
@@ -436,6 +436,18 @@ export default {
     this.getList();
     this.getContractTypes();
     this.getSealByUserId();
+  },
+  computed: {
+    // 判断 审核按钮
+    isCheck: function () {
+      if (this.pdf.state == 2 || this.pdf.state == 0) {
+        return true;
+      } else if (!this.pdf.seal) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   methods: {
     /** 查询电子合同管理列表 */

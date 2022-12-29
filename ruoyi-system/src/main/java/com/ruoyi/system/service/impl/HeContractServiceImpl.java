@@ -102,6 +102,8 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
         boolean flag = save(add);
         if (flag) {
             bo.setId(add.getId());
+            //别疑惑，为什么这里要调一下更新的方法，因为上面那个save会改变合同的审核状态，所以这里更新一下，完成曲线救国
+            updateByBo(bo);
         }
         return flag;
     }
@@ -121,6 +123,7 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
     private void validEntityBeforeSave(HeContract entity) {
         //TODO 做一些数据校验,如唯一约束
     }
+
 
     @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
