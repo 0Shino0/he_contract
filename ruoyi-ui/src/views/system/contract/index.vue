@@ -234,7 +234,7 @@
             type="text"
             icon="el-icon-view"
             @click="handlePreview(scope.row)"
-            >预览
+            >审批
           </el-button>
           <el-button
             size="mini"
@@ -437,7 +437,7 @@ export default {
       type: 0,
       // 是否显示弹出层
       open: false,
-      // 预览列表图片
+      // 预览(审批)列表图片
       previewListResource: true,
       // pdf弹窗可视
       dialogVisible: false,
@@ -505,7 +505,7 @@ export default {
       seals: [],
       /* 修改补充 */
       // 判断添加还是修改操作
-      isCheckAdd: true,
+      // isCheckAdd: true,
     };
   },
   created() {
@@ -535,9 +535,7 @@ export default {
         }
       });
 
-      return this.isCheckAdd
-        ? this.dict.type.he_review_status
-        : updateCheckStatus;
+      return updateCheckStatus;
     },
     // 修改电子合同状态 - 审核状态 - 状态显示转变
     // dictValueChange: function () {},
@@ -620,7 +618,7 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    /** 预览按钮操作 */
+    /** 预览(审批)按钮操作 */
     handlePreview(row) {
       this.pdf.id = row.id;
       this.pdf.src = PDF.createLoadingTask(row.ossUrl);
@@ -666,7 +664,7 @@ export default {
     handleAdd() {
       this.reset();
       // 标志此时为添加操作
-      this.isCheckAdd = true;
+      // this.isCheckAdd = true;
       this.open = true;
       this.title = "添加电子合同";
     },
@@ -674,7 +672,7 @@ export default {
     handleUpdate(row) {
       this.loading = true;
       // 标志此时为修改操作
-      this.isCheckAdd = false;
+      // this.isCheckAdd = false;
       this.reset();
       const id = row.id || this.ids;
       getContract(id).then((response) => {
