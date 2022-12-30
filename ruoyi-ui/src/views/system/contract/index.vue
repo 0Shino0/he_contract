@@ -101,13 +101,11 @@
           icon="el-icon-search"
           size="mini"
           @click="handleQuery"
-        >搜索
-        </el-button
-        >
+          >搜索
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-        >重置
-        </el-button
-        >
+          >重置
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -120,7 +118,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:contract:add']"
-        >新增
+          >新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -132,7 +130,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:contract:edit']"
-        >修改
+          >修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -142,7 +140,7 @@
           size="mini"
           @click="handlePreviewListResource(!previewListResource)"
           v-hasPermi="['system:oss:edit']"
-        >预览开关 : {{ previewListResource ? "禁用" : "启用" }}
+          >预览开关 : {{ previewListResource ? "禁用" : "启用" }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -154,7 +152,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:contract:remove']"
-        >删除
+          >删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -166,7 +164,7 @@
           :loading="exportLoading"
           @click="handleExport"
           v-hasPermi="['system:contract:export']"
-        >导出
+          >导出
         </el-button>
       </el-col>
       <right-toolbar
@@ -180,12 +178,12 @@
       :data="contractList"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="id" align="center" prop="id" v-if="true"/>
-      <el-table-column label="合同标题" align="center" prop="title"/>
-      <el-table-column label="合同描述" align="center" prop="description"/>
-      <el-table-column label="合同类别" align="center" prop="type"/>
-      <el-table-column label="归属于" align="center" prop="belong"/>
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="id" align="center" prop="id" v-if="true" />
+      <el-table-column label="合同标题" align="center" prop="title" />
+      <el-table-column label="合同描述" align="center" prop="description" />
+      <el-table-column label="合同类别" align="center" prop="type" />
+      <el-table-column label="归属于" align="center" prop="belong" />
       <el-table-column label="oss存储" align="center" prop="ossUrl">
         <template slot-scope="scope">
           <el-image
@@ -203,10 +201,10 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="ipfs链" align="center" prop="ipfsHash"/>
+      <el-table-column label="ipfs链" align="center" prop="ipfsHash" />
       <el-table-column label="是否入链" align="center" prop="isLink">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.he_yes_no" :value="scope.row.isLink"/>
+          <dict-tag :options="dict.type.he_yes_no" :value="scope.row.isLink" />
         </template>
       </el-table-column>
       <el-table-column label="是否删除" align="center" prop="isDelete">
@@ -236,7 +234,7 @@
             type="text"
             icon="el-icon-view"
             @click="handlePreview(scope.row)"
-          >审批
+            >审批
           </el-button>
           <el-button
             size="mini"
@@ -244,7 +242,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:contract:edit']"
-          >修改
+            >修改
           </el-button>
           <el-button
             size="mini"
@@ -252,7 +250,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:contract:remove']"
-          >删除
+            >删除
           </el-button>
         </template>
       </el-table-column>
@@ -270,7 +268,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="合同标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入合同标题"/>
+          <el-input v-model="form.title" placeholder="请输入合同标题" />
         </el-form-item>
         <el-form-item label="合同描述" prop="description">
           <el-input
@@ -295,11 +293,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="归属于" prop="belong">
-          <el-input v-model.number="form.belong" placeholder="请输入归属于"/>
+          <el-input v-model.number="form.belong" placeholder="请输入归属于" />
         </el-form-item>
         <el-form-item label="oss存储" prop="ossUrl">
           <!--          <image-upload v-model="form.ossUrl" :limit="1"/>-->
-          <fileUpload v-model="form.ossUrl" :limit="1"/>
+          <fileUpload v-model="form.ossUrl" :limit="1" />
         </el-form-item>
         <el-form-item label="ipfs链" prop="ipfsHash">
           <el-input
@@ -347,9 +345,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm"
-        >确 定
-        </el-button
-        >
+          >确 定
+        </el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -361,7 +358,7 @@
       v-loading="loading"
     >
       <div>
-        <PDF v-for="i in pdf.numPages" :key="i" :src="pdf.src" :page="i"/>
+        <PDF v-for="i in pdf.numPages" :key="i" :src="pdf.src" :page="i" />
       </div>
       <span slot="footer" class="dialog-footer">
         <el-select
@@ -382,13 +379,13 @@
           @click="handleCheck(pdf.id, true)"
           :disabled="isCheck"
           type="primary"
-        >审核通过</el-button
+          >审核通过</el-button
         >
         <el-button
           @click="handleCheck(pdf.id, false)"
           :disabled="pdf.state == 3 || pdf.state == 0"
           type="danger"
-        >审核不通过</el-button
+          >审核不通过</el-button
         >
       </span>
     </el-dialog>
@@ -404,9 +401,9 @@ import {
   updateContract,
   setStateById,
 } from "@/api/system/contract";
-import {listAllContractType} from "@/api/system/contractType";
-import {changePreviewListResource} from "@/api/system/oss";
-import {listSealByUserId} from "@/api/system/seal";
+import { listAllContractType } from "@/api/system/contractType";
+import { changePreviewListResource } from "@/api/system/oss";
+import { listSealByUserId } from "@/api/system/seal";
 import PDF from "vue-pdf";
 
 export default {
@@ -472,25 +469,25 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        id: [{required: true, message: "id不能为空", trigger: "blur"}],
+        id: [{ required: true, message: "id不能为空", trigger: "blur" }],
         title: [
-          {required: true, message: "合同标题不能为空", trigger: "blur"},
+          { required: true, message: "合同标题不能为空", trigger: "blur" },
         ],
         description: [
-          {required: true, message: "合同描述不能为空", trigger: "blur"},
+          { required: true, message: "合同描述不能为空", trigger: "blur" },
         ],
         type: [
-          {required: true, message: "合同类别不能为空", trigger: "change"},
+          { required: true, message: "合同类别不能为空", trigger: "change" },
         ],
         belong: [
-          {required: true, message: "归属于不能为空", trigger: "blur"},
-          {type: "number", message: "归属于必须为数字", trigger: "blur"},
+          { required: true, message: "归属于不能为空", trigger: "blur" },
+          { type: "number", message: "归属于必须为数字", trigger: "blur" },
         ],
         ossUrl: [
-          {required: true, message: "oss存储不能为空", trigger: "blur"},
+          { required: true, message: "oss存储不能为空", trigger: "blur" },
         ],
         ipfsHash: [
-          {required: true, message: "ipfs链不能为空", trigger: "blur"},
+          { required: true, message: "ipfs链不能为空", trigger: "blur" },
         ],
         // isLink: [
         //   {required: true, message: "是否入链不能为空", trigger: "blur"}
@@ -499,7 +496,7 @@ export default {
         //   {required: true, message: "是否删除不能为空", trigger: "blur"}
         // ],
         state: [
-          {required: true, message: "审核状态不能为空", trigger: "blur"},
+          { required: true, message: "审核状态不能为空", trigger: "blur" },
         ],
       },
       // 合同类别
