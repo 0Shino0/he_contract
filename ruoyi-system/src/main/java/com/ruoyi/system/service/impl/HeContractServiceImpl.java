@@ -174,6 +174,7 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
                         heContractVo.getBelong().toString());
                 log.info("addContract：" + new String(addContractResult, StandardCharsets.UTF_8));
             }else{
+                //如果审核不通过，那么修改文件状态为未通过即可
                 updateWrapper.eq("id",id).
                     set("state", state);
             }
