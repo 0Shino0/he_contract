@@ -110,6 +110,48 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
 
     @Override
     public Boolean updateByBo(HeContractBo bo) {
+        // 修改合同的一个逻辑，就是为了保持本地和区块链同步，已经入链的合同需要出链，是否入链状态改为否
+        // 是否删除的状态需要改变是来提醒用户改合同因改变而被迫出链，需要重新提交审核
+        // 重新提交之后是否删除状态改变为否，是否入链状态改变为是
+        // 获取数据库中的数据
+        HeContractVo heContractVo = queryById(bo.getId());
+        // 判断前后端数据是否一致，一致就跳过，不一致就出链
+        boolean isSame = !bo.getTitle().equals(heContractVo.getTitle()) ||
+            !bo.getDescription().equals(heContractVo.getDescription()) ||
+            !bo.getType().equals(heContractVo.getType()) ||
+            !bo.getBelong().equals(heContractVo.getBelong()) ||
+            !bo.getOssUrl().equals(heContractVo.getOssUrl()) ||
+            !bo.getIpfsHash().equals(heContractVo.getIpfsHash()) ||
+            !bo.getState().equals(heContractVo.getState());
+        //出链的另一个条件就是该合同本身是入链的
+        if (isSame && heContractVo.getIsLink() == 1) {
+            if ("2".equals(bo.getState()) || "3".equals(bo.getState())) {
+                bo.setState("1");
+            }
+            // TODO 调用数据出链方法，删除对应的数据
+            // 初始化
+            Network network = fabricUtils.getNetwork();
+            Contract contract = fabricUtils.getContract();
+            // 当合同的状态为入链状态才进行区块删除
+            byte[] deleteContractResult = new byte[0];
+            try {
+                deleteContractResult = contract.createTransaction("deleteContractById")
+                    .setEndorsingPeers(network.getChannel().getPeers(EnumSet.of(Peer.PeerRole.ENDORSING_PEER)))
+                    .submit(
+                        bo.getId().toString());
+            } catch (ContractException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            log.info("deleteContractById：" + new String(deleteContractResult, StandardCharsets.UTF_8));
+            //出链完毕，还需要更新一下是否删除的状态
+            bo.setIsDelete(1);
+            //出链完毕，还需要更新一下是否入链的状态
+            bo.setIsLink(0);
+        }
         HeContract update = BeanUtil.toBean(bo, HeContract.class);
         validEntityBeforeSave(update);
         return updateById(update);
@@ -135,6 +177,31 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
             urlList = heContracts.stream().map(heContract -> heContract.getOssUrl()).collect(Collectors.toList());
             // 删除oss文件
             iSysOssService.deleteWithValidByUrls(urlList);
+            // TODO 调用数据出链方法，删除对应的数据
+            // 初始化区块链
+            Network network = fabricUtils.getNetwork();
+            Contract contract = fabricUtils.getContract();
+            ids.forEach(id -> {
+                // 获取contract
+                HeContractVo heContractVo = queryById(id);
+                // 当合同的状态为入链状态才进行区块删除
+                if (heContractVo.getIsLink() == 1) {
+                    byte[] deleteContractResult = new byte[0];
+                    try {
+                        deleteContractResult = contract.createTransaction("deleteContractById")
+                            .setEndorsingPeers(network.getChannel().getPeers(EnumSet.of(Peer.PeerRole.ENDORSING_PEER)))
+                            .submit(
+                                id.toString());
+                    } catch (ContractException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+                    log.info("deleteContractById：" + new String(deleteContractResult, StandardCharsets.UTF_8));
+                }
+            });
         }
         return removeByIds(ids);
     }
@@ -155,9 +222,11 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
                 updateWrapper.eq("id", id)
                     .set("state", state)
                     .set("ipfs_hash", ipfsHash)
+                    // 下一行代码主要承接修改后重新审核通过，更改是否删除的状态为否
+                    .set("is_delete", 0)
                     .set("is_link", 1);
                 // TODO 调用数据入链方法，整体数据存入Fabric
-                // 初始化
+                // 初始化区块链
                 Network network = fabricUtils.getNetwork();
                 Contract contract = fabricUtils.getContract();
                 // 获取contract
@@ -173,9 +242,30 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
                         heContractVo.getBelong().toString(),
                         heContractVo.getBelong().toString());
                 log.info("addContract：" + new String(addContractResult, StandardCharsets.UTF_8));
-            }else{
-                //如果审核不通过，那么修改文件状态为未通过即可
-                updateWrapper.eq("id",id).
+            } else {
+                //如果审核不通过，先要出链，然后修改文件状态为未通过
+                // TODO 调用数据出链方法，删除对应的数据
+                // 初始化区块链
+                Network network = fabricUtils.getNetwork();
+                Contract contract = fabricUtils.getContract();
+                // 当合同的状态为入链状态才进行区块删除
+                byte[] deleteContractResult = new byte[0];
+                try {
+                    deleteContractResult = contract.createTransaction("deleteContractById")
+                        .setEndorsingPeers(network.getChannel().getPeers(EnumSet.of(Peer.PeerRole.ENDORSING_PEER)))
+                        .submit(
+                            id.toString());
+                } catch (ContractException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                }
+                log.info("deleteContractById：" + new String(deleteContractResult, StandardCharsets.UTF_8));
+                updateWrapper.eq("id", id).
+                    set("is_link", 0).
+                    set("is_delete", 1).
                     set("state", state);
             }
         } catch (DocumentException documentException) {
