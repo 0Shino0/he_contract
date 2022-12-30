@@ -173,6 +173,9 @@ public class HeContractServiceImpl extends ServicePlusImpl<HeContractMapper, HeC
                         heContractVo.getBelong().toString(),
                         heContractVo.getBelong().toString());
                 log.info("addContract：" + new String(addContractResult, StandardCharsets.UTF_8));
+            }else{
+                updateWrapper.eq("id",id).
+                    set("state", state);
             }
         } catch (DocumentException documentException) {
             documentException.printStackTrace();

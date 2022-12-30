@@ -81,6 +81,8 @@ public class HeSealServiceImpl extends ServicePlusImpl<HeSealMapper, HeSeal, HeS
         boolean flag = save(add);
         if (flag) {
             bo.setId(add.getId());
+            //这里是同样的问题，依旧是save()方法导致的数据错误，需要调用一下更新方法
+            updateByBo(bo);
         }
         return flag;
     }
