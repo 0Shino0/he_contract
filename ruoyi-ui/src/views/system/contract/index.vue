@@ -524,7 +524,7 @@ export default {
         return false;
       }
     },
-    // 修改电子合同 - 审核状态 - 状态重写
+    // 修改电子合同 - 审核状态 - 状态过滤(已通过未通过)
     checkStatus: function () {
       // 修改时的状态
       let updateCheckStatus = [];
@@ -699,6 +699,19 @@ export default {
         if (valid) {
           this.buttonLoading = true;
           if (this.form.id != null) {
+            // 将2、3转变回来
+            console.log(this.form);
+            for (var item in this.form) {
+              // console.log(item, ":", data[item]);
+              if (
+                this.form[item] === "已通过" ||
+                this.form[item] === "未通过"
+              ) {
+                console.log(1);
+                this.form[item] = this.form[item] === "已通过" ? "2" : "3";
+              }
+            }
+
             updateContract(this.form)
               .then((response) => {
                 this.$modal.msgSuccess("修改成功");

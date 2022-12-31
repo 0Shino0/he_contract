@@ -271,11 +271,12 @@
             size="small"
           >
             <el-option
-              v-for="dict in dict.type.he_review_status"
+              v-for="dict in addStatus"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
             />
+            <!-- dict.type.he_review_status -->
           </el-select>
         </el-form-item>
       </el-form>
@@ -369,10 +370,28 @@ export default {
           { required: true, message: "审核状态不能为空", trigger: "blur" },
         ],
       },
+      /* 补充相关代码， */
+      // 判断点击的是新增还是修改,默认为新增
+      isAdd: true,
     };
   },
   created() {
     this.getList();
+  },
+  computed: {
+    // 添加印章 - 审核状态 - 状态过滤
+    addStatus: function () {
+      // 修改时的状态
+      let addCheckStatus = [];
+      // this.dict.type.he_review_status 为添加时的状态
+      this.dict.type.he_review_status.map((currentValue) => {
+        if (currentValue.value === "0" || currentValue.value === "1") {
+          addCheckStatus.push(currentValue);
+        }
+      });
+
+      return this.isAdd ? addCheckStatus : this.dict.type.he_review_status;
+    },
   },
   methods: {
     /** 查询印章管理列表 */
@@ -430,12 +449,16 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      // 标识当前为添加操作
+      this.isAdd = true;
       this.open = true;
       this.title = "添加印章管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.loading = true;
+      // 标识当前为修改操作
+      this.isAdd = false;
       this.reset();
       const id = row.id || this.ids;
       getSeal(id).then((response) => {
