@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="id" prop="id">
         <el-input
           v-model="queryParams.id"
@@ -20,7 +26,12 @@
         />
       </el-form-item>
       <el-form-item label="模板类别" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择合同类别" clearable size="small">
+        <el-select
+          v-model="queryParams.type"
+          placeholder="请选择合同类别"
+          clearable
+          size="small"
+        >
           <el-option
             v-for="type in contractTypes"
             :key="type.id"
@@ -29,7 +40,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="是否删除" prop="isDelete">
+      <!-- <el-form-item label="是否删除" prop="isDelete">
         <el-select
           v-model="queryParams.isDelete"
           placeholder="是否删除"
@@ -43,10 +54,18 @@
             :value="dict.value"
           />
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -59,7 +78,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:contractTemplate:add']"
-        >新增
+          >新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +90,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:contractTemplate:edit']"
-        >修改
+          >修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -81,7 +100,7 @@
           size="mini"
           @click="handlePreviewListResource(!previewListResource)"
           v-hasPermi="['system:oss:edit']"
-        >预览开关 : {{ previewListResource ? "禁用" : "启用" }}
+          >预览开关 : {{ previewListResource ? "禁用" : "启用" }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -93,7 +112,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:contractTemplate:remove']"
-        >删除
+          >删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,35 +124,55 @@
           :loading="exportLoading"
           @click="handleExport"
           v-hasPermi="['system:contractTemplate:export']"
-        >导出
+          >导出
         </el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="contractTemplateList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="id" align="center" prop="id" v-if="true"/>
-      <el-table-column label="模板标题" align="center" prop="title"/>
+    <el-table
+      v-loading="loading"
+      :data="contractTemplateList"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="id" align="center" prop="id" v-if="true" />
+      <el-table-column label="模板标题" align="center" prop="title" />
       <el-table-column label="oss存储" align="center" prop="ossUrl">
         <template slot-scope="scope">
           <el-image
             v-if="previewListResource && checkFileSuffixByUrl(scope.row.ossUrl)"
-            style="width: 100px; height: 100px;"
+            style="width: 100px; height: 100px"
             :src="scope.row.ossUrl"
-            :preview-src-list="[scope.row.ossUrl]"/>
-          <a v-text="scope.row.ossUrl" @click="preViewFile(scope.row.ossUrl)"
-             v-if="!checkFileSuffixByUrl(scope.row.ossUrl) || !previewListResource"/>
+            :preview-src-list="[scope.row.ossUrl]"
+          />
+          <a
+            v-text="scope.row.ossUrl"
+            @click="preViewFile(scope.row.ossUrl)"
+            v-if="
+              !checkFileSuffixByUrl(scope.row.ossUrl) || !previewListResource
+            "
+          />
         </template>
       </el-table-column>
-      <el-table-column label="模板描述" align="center" prop="description"/>
-      <el-table-column label="模板类别" align="center" prop="type"/>
-      <el-table-column label="是否删除" align="center" prop="isDelete">
+      <el-table-column label="模板描述" align="center" prop="description" />
+      <el-table-column label="模板类别" align="center" prop="type" />
+      <!-- <el-table-column label="是否删除" align="center" prop="isDelete">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.he_yes_no" :value="scope.row.isDelete"/>
+          <dict-tag
+            :options="dict.type.he_yes_no"
+            :value="scope.row.isDelete"
+          />
         </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      </el-table-column> -->
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -141,7 +180,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:contractTemplate:edit']"
-          >修改
+            >修改
           </el-button>
           <el-button
             size="mini"
@@ -149,14 +188,14 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:contractTemplate:remove']"
-          >删除
+            >删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -167,17 +206,26 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="模板标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入模板标题"/>
+          <el-input v-model="form.title" placeholder="请输入模板标题" />
         </el-form-item>
         <el-form-item label="oss存储" prop="ossUrl">
           <!--          <image-upload v-model="form.ossUrl" :limit="1"/>-->
-          <fileUpload v-model="form.ossUrl" :limit="1"/>
+          <fileUpload v-model="form.ossUrl" :limit="1" />
         </el-form-item>
         <el-form-item label="模板描述" prop="description">
-          <el-input v-model="form.description" type="textarea" placeholder="请输入内容"/>
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            placeholder="请输入内容"
+          />
         </el-form-item>
         <el-form-item label="模板类别" prop="type">
-          <el-select v-model="form.type" placeholder="请选择模板类别" clearable size="small">
+          <el-select
+            v-model="form.type"
+            placeholder="请选择模板类别"
+            clearable
+            size="small"
+          >
             <el-option
               v-for="type in contractTypes"
               :key="type.id"
@@ -191,7 +239,9 @@
         <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+        <el-button :loading="buttonLoading" type="primary" @click="submitForm"
+          >确 定</el-button
+        >
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -204,16 +254,15 @@ import {
   getContractTemplate,
   delContractTemplate,
   addContractTemplate,
-  updateContractTemplate
+  updateContractTemplate,
 } from "@/api/system/contractTemplate";
 
-import {listAllContractType} from "@/api/system/contractType";
-import {changePreviewListResource} from "@/api/system/oss";
-
+import { listAllContractType } from "@/api/system/contractType";
+import { changePreviewListResource } from "@/api/system/oss";
 
 export default {
   name: "ContractTemplate",
-  dicts: ['he_yes_no'],
+  dicts: ["he_yes_no"],
   data() {
     return {
       // 按钮loading
@@ -256,20 +305,18 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        id: [
-          {required: true, message: "id不能为空", trigger: "blur"}
-        ],
+        id: [{ required: true, message: "id不能为空", trigger: "blur" }],
         title: [
-          {required: true, message: "模板标题不能为空", trigger: "blur"}
+          { required: true, message: "模板标题不能为空", trigger: "blur" },
         ],
         ossUrl: [
-          {required: true, message: "oss存储不能为空", trigger: "blur"}
+          { required: true, message: "oss存储不能为空", trigger: "blur" },
         ],
         description: [
-          {required: true, message: "模板描述不能为空", trigger: "blur"}
+          { required: true, message: "模板描述不能为空", trigger: "blur" },
         ],
         type: [
-          {required: true, message: "模板类别不能为空", trigger: "change"}
+          { required: true, message: "模板类别不能为空", trigger: "change" },
         ],
         // isDelete: [
         //   {required: true, message: "是否删除不能为空", trigger: "blur"}
@@ -287,7 +334,7 @@ export default {
     /** 查询电子合同模板管理列表 */
     getList() {
       this.loading = true;
-      listContractTemplate(this.queryParams).then(response => {
+      listContractTemplate(this.queryParams).then((response) => {
         this.contractTemplateList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -295,14 +342,14 @@ export default {
     },
     /** 查询电子合同类别列表 */
     getContractTypes() {
-      listAllContractType(null).then(response => {
+      listAllContractType(null).then((response) => {
         this.contractTypes = response;
         console.log(this.contractTypes);
-      })
+      });
     },
     checkFileSuffixByUrl(ossUrl) {
       let arr = ["png", "jpg", "jpeg"];
-      return arr.some(type => {
+      return arr.some((type) => {
         return ossUrl.indexOf(type) > -1;
       });
     },
@@ -321,7 +368,7 @@ export default {
         type: undefined,
         isDelete: undefined,
         createTime: undefined,
-        updateTime: undefined
+        updateTime: undefined,
       };
       this.resetForm("form");
     },
@@ -337,9 +384,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -351,8 +398,8 @@ export default {
     handleUpdate(row) {
       this.loading = true;
       this.reset();
-      const id = row.id || this.ids
-      getContractTemplate(id).then(response => {
+      const id = row.id || this.ids;
+      getContractTemplate(id).then((response) => {
         this.loading = false;
         this.form = response.data;
         this.open = true;
@@ -361,25 +408,29 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           this.buttonLoading = true;
           if (this.form.id != null) {
-            updateContractTemplate(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            }).finally(() => {
-              this.buttonLoading = false;
-            });
+            updateContractTemplate(this.form)
+              .then((response) => {
+                this.$modal.msgSuccess("修改成功");
+                this.open = false;
+                this.getList();
+              })
+              .finally(() => {
+                this.buttonLoading = false;
+              });
           } else {
-            addContractTemplate(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            }).finally(() => {
-              this.buttonLoading = false;
-            });
+            addContractTemplate(this.form)
+              .then((response) => {
+                this.$modal.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+              })
+              .finally(() => {
+                this.buttonLoading = false;
+              });
           }
         }
       });
@@ -387,40 +438,51 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除电子合同模板管理编号为"' + ids + '"的数据项？').then(() => {
-        this.loading = true;
-        return delContractTemplate(ids);
-      }).then(() => {
-        this.loading = false;
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).finally(() => {
-        this.loading = false;
-      });
+      this.$modal
+        .confirm('是否确认删除电子合同模板管理编号为"' + ids + '"的数据项？')
+        .then(() => {
+          this.loading = true;
+          return delContractTemplate(ids);
+        })
+        .then(() => {
+          this.loading = false;
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     // 预览列表图片状态修改
     handlePreviewListResource(previewListResource) {
       let text = previewListResource ? "启用" : "停用";
-      this.$modal.confirm('确认要"' + text + '""预览列表图片"配置吗?').then(() => {
-        return changePreviewListResource(previewListResource);
-      }).then(() => {
-        this.getList()
-        this.$modal.msgSuccess(text + "成功");
-      }).catch(() => {
-        this.previewListResource = previewListResource !== true;
-      })
+      this.$modal
+        .confirm('确认要"' + text + '""预览列表图片"配置吗?')
+        .then(() => {
+          return changePreviewListResource(previewListResource);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess(text + "成功");
+        })
+        .catch(() => {
+          this.previewListResource = previewListResource !== true;
+        });
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.$download.excel('/system/contractTemplate/export', this.queryParams);
+      this.$download.excel("/system/contractTemplate/export", this.queryParams);
     },
     preViewFile(url) {
-      if (url.lastIndexOf(".pdf")!=-1) {
-        window.open(url, '_blank');
-      }else{
-      window.open('https://view.officeapps.live.com/op/view.aspx?src=' + url, '_blank');
+      if (url.lastIndexOf(".pdf") != -1) {
+        window.open(url, "_blank");
+      } else {
+        window.open(
+          "https://view.officeapps.live.com/op/view.aspx?src=" + url,
+          "_blank"
+        );
       }
-    }
-  }
+    },
+  },
 };
 </script>
